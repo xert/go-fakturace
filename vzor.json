@@ -1,0 +1,41 @@
+[
+  {
+    "zakazka": "ZAKAZKA-1",
+    "popis": "Vzorova zakazka 1",
+    "platnost": "1.12.2015 - ",
+    "frekvence": "1,0,0",
+    "typ_dokladu": "FAKTURA",
+    "polozky": [
+      {
+        "nazev": "Sluzba A",
+        "vyfakturovano_do": "30.10.2016",
+        "cenik": "A",
+        "cena": 100,
+	"mnozstvi": 12
+      }
+    ]
+  },
+  {
+    "zakazka": "ZAKAZKA-2",
+    "popis": "Vzorova zakazka 2",
+    "platnost": "1.12.2015 - ",
+    "frekvence": "0,1,0",
+    "typ_dokladu": "FAKTURA",
+    "polozky": [
+      {
+        "nazev": "Sluzba B",
+        "vyfakturovano_do": "30.10.2016",
+        "cenik": "B",
+        "cena": 12000,
+	"mnozstvi": 1
+      },
+      {
+        "nazev": "Sluzba C",
+        "vyfakturovano_do": "30.10.2016",
+        "cenik": "C",
+        "cena": 1000,
+	"mnozstvi": 1
+      }
+    ]
+  }
+]
