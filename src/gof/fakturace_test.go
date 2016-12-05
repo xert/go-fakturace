@@ -154,7 +154,6 @@ func TestStruct(t *testing.T) {
 				Od: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC),
 				Do: time.Date(2016, time.December, 31, 0, 0, 0, 0, time.UTC),
 			},
-			Frekvence: frekvence{Years: 0, Months: 1, Days: 0},
 			Polozky: []polozka{
 				polozka{
 					Nazev:           "Test 1a",
@@ -185,7 +184,6 @@ func TestStruct(t *testing.T) {
 				Od: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC),
 				Do: time.Date(2016, time.December, 31, 0, 0, 0, 0, time.UTC),
 			},
-			Frekvence: frekvence{Years: 0, Months: 1, Days: 0},
 			Polozky: []polozka{
 				polozka{
 					Nazev:           "Test 2a",

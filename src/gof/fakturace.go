@@ -29,23 +29,26 @@ func (f *fakturace) Fakturuj(now time.Time) (fakturace, error) {
 	enc.Encode(f)
 	dec.Decode(&faktury)
 
-	deleted := 0
-	for k, _ := range faktury.Smlouvy {
-		key := k - deleted
+	for key, _ := range faktury.Smlouvy {
 		if err := faktury.Smlouvy[key].Fakturuj(now); err != nil {
 			return faktury, err
 		}
 
+		// aktualizace fakturovano do v puvodnim objektu fakturace (pro ulozeni do json)
+		for kp, _ := range faktury.Smlouvy[key].Polozky {
+			f.Smlouvy[key].Polozky[kp].VyfakturovanoDo = faktury.Smlouvy[key].Polozky[kp].VyfakturovanoDo
+		}
+	}
+
+	deleted := 0
+	for k, _ := range faktury.Smlouvy {
+		key := k - deleted
 		if len(faktury.Smlouvy[key].Polozky) == 0 { // bez polozek nefakturujeme
 			log.Printf("Skipping SMLOUVA %s\n", faktury.Smlouvy[key].Zakazka)
 			faktury.Smlouvy = append(faktury.Smlouvy[:key], faktury.Smlouvy[key+1:]...)
 			deleted++
-		} else {
-			// aktualizace fakturovano do v puvodnim objektu fakturace (pro ulozeni do json)
-			for kp, _ := range faktury.Smlouvy[key].Polozky {
-				f.Smlouvy[key].Polozky[kp].VyfakturovanoDo = faktury.Smlouvy[key].Polozky[kp].VyfakturovanoDo
-			}
 		}
+
 	}
 
 	return faktury, nil
@@ -92,10 +95,6 @@ func NewFakturace(jsondata []byte) (f fakturace, err error) {
 
 	for k, s := range f.Smlouvy {
 		f.Smlouvy[k].Nazev = s.Zakazka
-		if moreThanOneNonZero(s.Frekvence.Years, s.Frekvence.Months, s.Frekvence.Days) {
-			err = fmt.Errorf("Error: Smlouva %s, frekvence %d,%d,%d - more than one field is non zero", s.Zakazka, s.Frekvence.Years, s.Frekvence.Months, s.Frekvence.Days)
-			return
-		}
 
 		for _, p := range s.Polozky {
 			if moreThanOneNonZero(p.Frekvence.Years, p.Frekvence.Months, p.Frekvence.Days) {

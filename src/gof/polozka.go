@@ -10,11 +10,11 @@ type polozka struct {
 	Nazev           string    `json:"nazev" xml:"nazev"`
 	VyfakturovanoDo datum     `json:"vyfakturovano_do" xml:"-"`
 	Cenik           string    `json:"cenik" xml:"cenik"`
+	Frekvence       frekvence `json:"frekvence" xml:"-"`
 	Mnozstvi        float32   `json:"mnozstvi" xml:"mnozMj"`
 	Cena            float32   `json:"cena" xml:"cenaMj"`
 	Sleva           float32   `json:"sleva,omitempty" xml:"slevaPol"`
 	Platnost        *interval `json:"platnost,omitempty"  xml:"-"`
-	Frekvence       frekvence `json:"frekvence" xml:"-"`
 }
 
 func (p *polozka) Fakturuj(now time.Time, s *smlouva) error {
@@ -29,9 +29,6 @@ func (p *polozka) Fakturuj(now time.Time, s *smlouva) error {
 	if p.VyfakturovanoDo.IsZero() {
 		// prazdne vyfakturovano do znaci novou polozku
 		p.VyfakturovanoDo = datum{now.AddDate(-p.Frekvence.Years, -p.Frekvence.Months, -p.Frekvence.Days)}
-	}
-	if p.Frekvence.IsZero() {
-		p.Frekvence = s.Frekvence
 	}
 
 	if p.Mnozstvi == 0 {

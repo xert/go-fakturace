@@ -6,14 +6,13 @@ import (
 )
 
 type smlouva struct {
-	Nazev          string    `json:"-" xml:"cisSml"`
-	Zakazka        string    `json:"zakazka" xml:"zakazka"`
-	DatumVystaveni datum     `json:"-"  xml:"datVyst"`
-	DatumDUZP      datum     `json:"-"  xml:"duzpPuv"`
-	Popis          string    `json:"popis" xml:"popis"`
-	Platnost       interval  `json:"platnost" xml:"-"`
-	Frekvence      frekvence `json:"frekvence" xml:"-"`
-	TypDokladu     string    `json:"typ_dokladu" xml:"typDokl"`
+	Nazev          string   `json:"-" xml:"cisSml"`
+	Zakazka        string   `json:"zakazka" xml:"zakazka"`
+	DatumVystaveni datum    `json:"-"  xml:"datVyst"`
+	DatumDUZP      datum    `json:"-"  xml:"duzpPuv"`
+	Popis          string   `json:"popis" xml:"popis"`
+	Platnost       interval `json:"platnost" xml:"-"`
+	TypDokladu     string   `json:"typ_dokladu" xml:"typDokl"`
 
 	Polozky []polozka `json:"polozky" xml:"polozkyFaktury>faktura-vydana-polozka"`
 }
